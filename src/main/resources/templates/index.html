@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/css/main.css">
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mars Rover Api</title>
+</head>
+<body>
+	<div class="background-image">
+	<div class="container text-white">
+		<h2>Welcome to the MarsRover Api Web Appication</h2>
+		<form method="get" id="frmRoverType" th:object="${homeDto}">
+		
+			<input type="hidden" th:field="*{marsApiRoverData}">
+			<div class="btn-group btn-group-lg" role="group"
+				style="margin: 2em 0em">
+				<button type="button" class="btn btn-secondary"
+					id="marsApiCuriosity">Curiosity</button>
+				<button type="button" class="btn btn-secondary"
+					id="marsApiOpportunity">Opportunity</button>
+				<button type="button" class="btn btn-secondary" id="marsApiSpirit">Spirit</button>
+			</div>
+			
+		
+
+			<div class="row">
+				<div class="col-12 col-md-4">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox"
+							th:field="*{cameraFHAZ}" th:attr="disabled=${!#lists.contains(validCameras,'FHAZ') ? 'disabled' : 'false'}"> <label class="form-check-label"
+							for="cameraFHAZ1">Front Hazard Avoidance Camera </label>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox"
+							th:field="*{cameraRHAZ}"  th:attr="disabled=${!#lists.contains(validCameras,'RHAZ') ? 'disabled' : 'false'}"> <label class="form-check-label"
+							for="cameraRHAZ1">Rear Hazard Avoidance Camera </label>
+					</div>
+
+				</div>
+				<div class="col-12 col-md-4">
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox"
+							th:field="*{cameraMAST}" th:attr="disabled=${!#lists.contains(validCameras,'MAST') ? 'disabled' : 'false'}"> <label class="form-check-label"
+							for="cameraMAST1">Mast Camera </label>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-12 col-md-4">
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox"
+							th:field="*{cameraCHEMCAM}"  th:attr="disabled=${!#lists.contains(validCameras,'CHEMCAM') ? 'disabled' : 'false'}"> <label
+							class="form-check-label" for="cameraCHEMCAM1">Chemistry
+							and Camera Complex </label>
+					</div>
+
+				</div>
+				<div class="col-12 col-md-4">
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox"
+							th:field="*{cameraMAHLI}"  th:attr="disabled=${!#lists.contains(validCameras,'MAHLI') ? 'disabled' : 'false'}"> <label
+							class="form-check-label" for="cameraMAHLI1">Mars Hand
+							Lens Imager </label>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox"
+							th:field="*{cameraMARDI}"  th:attr="disabled=${!#lists.contains(validCameras,'MARDI') ? 'disabled' : 'false'}"> <label
+							class="form-check-label" for="cameraMARDI1">Mars Descent
+							Imager </label>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-12 col-md-4">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox"
+							th:field="*{cameraNAVCAM}"  th:attr="disabled=${!#lists.contains(validCameras,'NAVCAM') ? 'disabled' : 'false'}"> <label
+							class="form-check-label" for="cameraNAVCAM1">Navigation
+							Camera </label>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox"
+							th:field="*{cameraPANCAM}"  th:attr="disabled=${!#lists.contains(validCameras,'PANCAM') ? 'disabled' : 'false'}"> <label
+							class="form-check-label" for="cameraPANCAM1">Panoramic
+							Camera </label>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox"
+							th:field="*{cameraMINITES}"> <label
+							class="form-check-label" for="cameraMINITES1">Miniature
+							Thermal Emission Spectrometer (Mini-TES) </label>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label for="marsSol">Mars Day:</label> <input type="number"
+					class="form-control" th:field="*{marsSol}" min="0" />
+			</div>
+
+			<button type="submit" class="btn btn-primary btn-md mb-4">Submit</button>
+		</form>
+
+		<div
+			th:each="index : ${#numbers.sequence(0,roverData.photos.size(),4)}"
+			class="row" style="margin-bottom: 2em">
+			<div class="col-sm" th:if="${index < roverData.photos.size()}">
+				<img th:src="${roverData.photos[index].imgSrc}" class="img-fluid" />
+			</div>
+			<div class="col-sm" th:if="${index+1 < roverData.photos.size()}">
+				<img th:src="${roverData.photos[index+1].imgSrc}" class="img-fluid" />
+			</div>
+			<div class="col-sm" th:if="${index+2 < roverData.photos.size()}">
+				<img th:src="${roverData.photos[index+2].imgSrc}" class="img-fluid" />
+			</div>
+			<div class="col-sm" th:if="${index+3 < roverData.photos.size()}">
+				<img th:src="${roverData.photos[index+3].imgSrc}" class="img-fluid" />
+			</div>
+		</div>
+	</div>
+
+	</div>
+	<script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>
